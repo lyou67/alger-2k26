@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Algérie 🇩🇿">
+<meta name="theme-color" content="#0D3320">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<title>Voyage Algérie 2026</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap');
+
+:root {
+  --green-dark: #0D3320;
+  --green-mid: #1A5C38;
+  --green-light: #2E8B57;
+  --sand: #F5EDD8;
+  --terracotta: #C4603A;
+  --gold: #D4A336;
+  --oasis: #3D6B4F;
+  --sky: #4E7FA8;
+  --white: #ffffff;
+  --light: #F8F5EE;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bot: env(safe-area-inset-bottom, 0px);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+html { height: 100%; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--light);
+  color: #1A1208;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+/* ── SPLASH / HERO ── */
+.hero {
+  background: linear-gradient(160deg, #0D3320 0%, #1A5C38 50%, #2E8B57 100%);
+  padding: calc(var(--safe-top) + 40px) 24px 36px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 0; right: 0;
+  height: 28px;
+  background: var(--light);
+  border-radius: 28px 28px 0 0;
+}
+.hero-logo {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  border: 3px solid rgba(212,163,54,0.6);
+  margin: 0 auto 14px;
+  display: block;
+  box-shadow: 0 0 0 6px rgba(212,163,54,0.15);
+}
+.hero-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  color: var(--sand);
+  line-height: 1.1;
+}
+.hero h1 em { font-style: italic; color: var(--gold); }
+.hero-sub {
+  font-size: 12px;
+  color: rgba(245,237,216,0.6);
+  margin-top: 8px;
+  letter-spacing: 0.04em;
+}
+.hero-chips {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+.hero-chip {
+  font-size: 11px;
+  padding: 4px 11px;
+  border-radius: 20px;
+  border: 1px solid rgba(245,237,216,0.25);
+  color: rgba(245,237,216,0.75);
+}
+
+/* ── BOTTOM TAB BAR ── */
+.tabs {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: var(--green-dark);
+  display: flex;
+  padding-bottom: var(--safe-bot);
+  border-top: 1px solid rgba(255,255,255,0.08);
+  z-index: 200;
+}
+.tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 4px 10px;
+  cursor: pointer;
+  opacity: 0.45;
+  transition: opacity 0.2s;
+  font-size: 10px;
+  color: var(--sand);
+  gap: 3px;
+  border: none;
+  background: none;
+  -webkit-appearance: none;
+}
+.tab.active { opacity: 1; }
+.tab.active .tab-dot { background: var(--gold); }
+.tab-icon { font-size: 20px; line-height: 1; }
+.tab-dot {
+  width: 4px; height: 4px;
+  border-radius: 2px;
+  background: transparent;
+  transition: background 0.2s;
+}
+
+/* ── PAGES ── */
+.page {
+  display: none;
+  padding: 20px 16px calc(70px + var(--safe-bot)) 16px;
+  min-height: 100vh;
+  animation: fadeIn 0.2s ease;
+}
+.page.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── UV BANNER ── */
+.uv-banner {
+  background: var(--terracotta);
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin-bottom: 14px;
+  color: white;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.uv-banner strong { display: block; font-size: 13px; margin-bottom: 2px; }
+
+/* ── SECTION HEADER ── */
+.section-hd {
+  margin-bottom: 12px;
+  padding-top: 4px;
+}
+.section-tag {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  margin-bottom: 3px;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  font-weight: 700;
+}
+.section-sub {
+  font-size: 12px;
+  color: rgba(26,18,8,0.5);
+  margin-top: 2px;
+}
+
+/* ── UV CARD ── */
+.uv-card {
+  background: white;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(26,18,8,0.08);
+  margin-bottom: 14px;
+}
+.uv-card-head {
+  background: var(--green-dark);
+  padding: 10px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.uv-card-label { font-size: 11px; font-weight: 500; color: rgba(245,237,216,0.85); letter-spacing: 0.06em; }
+.uv-badge {
+  font-size: 10px; font-weight: 500;
+  padding: 3px 9px; border-radius: 20px;
+}
+.badge-high { background: rgba(212,163,54,0.25); color: var(--gold); }
+.badge-vhigh { background: rgba(196,96,58,0.25); color: #FFAA88; }
+
+.uv-row {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(26,18,8,0.05);
+  padding: 9px 14px;
+  gap: 10px;
+}
+.uv-row:last-of-type { border-bottom: none; }
+.uv-row.peak { background: rgba(212,163,54,0.06); }
+.uv-time-label { width: 72px; flex-shrink: 0; font-size: 11px; color: rgba(26,18,8,0.4); font-weight: 500; }
+.uv-number { width: 38px; flex-shrink: 0; font-size: 13px; font-weight: 600; }
+.uv-bar-bg { flex: 1; height: 5px; background: rgba(26,18,8,0.07); border-radius: 3px; overflow: hidden; }
+.uv-bar-fill { height: 100%; border-radius: 3px; }
+.uv-label { width: 80px; text-align: right; font-size: 11px; color: rgba(26,18,8,0.45); flex-shrink: 0; }
+.uv-label.hot { color: var(--terracotta); font-weight: 500; }
+
+.temps-row {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  padding: 10px 14px;
+  background: rgba(26,18,8,0.02);
+  border-top: 1px solid rgba(26,18,8,0.05);
+}
+.temp-chip {
+  font-size: 11px;
+  padding: 3px 9px;
+  border-radius: 20px;
+  background: rgba(26,18,8,0.06);
+  color: rgba(26,18,8,0.6);
+}
+.temp-chip b { color: #1A1208; font-weight: 500; }
+
+/* ── DAY CARD ── */
+.day-card {
+  background: white;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(26,18,8,0.08);
+  margin-bottom: 10px;
+}
+.day-card-head {
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(26,18,8,0.06);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.day-dot {
+  width: 9px; height: 9px;
+  border-radius: 50%; flex-shrink: 0;
+}
+.d-alger { background: var(--sky); }
+.d-cherchell { background: var(--oasis); }
+.d-bousaada { background: var(--terracotta); }
+.d-retour { background: var(--gold); }
+
+.day-card-date { font-size: 10px; font-weight: 500; color: rgba(26,18,8,0.4); letter-spacing: 0.06em; }
+.day-card-name { font-size: 14px; font-weight: 500; }
+.day-card-wx {
+  margin-left: auto;
+  text-align: right;
+  flex-shrink: 0;
+  font-size: 11px;
+  color: rgba(26,18,8,0.5);
+}
+.day-card-wx strong { display: block; font-size: 14px; color: #1A1208; font-weight: 500; }
+
+.event {
+  display: flex;
+  gap: 10px;
+  padding: 11px 14px;
+  border-bottom: 1px solid rgba(26,18,8,0.045);
+  align-items: flex-start;
+}
+.event:last-child { border-bottom: none; }
+.event-time { width: 48px; flex-shrink: 0; font-size: 11px; color: rgba(26,18,8,0.38); font-weight: 500; padding-top: 2px; }
+.event-line { width: 2px; border-radius: 1px; align-self: stretch; flex-shrink: 0; min-height: 20px; }
+.line-alger { background: rgba(78,127,168,0.35); }
+.line-cherchell { background: rgba(61,107,79,0.35); }
+.line-bousaada { background: rgba(196,96,58,0.35); }
+.line-retour { background: rgba(212,163,54,0.35); }
+
+.event-body { flex: 1; }
+.event-title { font-size: 13px; font-weight: 500; margin-bottom: 2px; }
+.event-desc { font-size: 12px; color: rgba(26,18,8,0.52); line-height: 1.5; }
+.event-tags { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 5px; }
+.etag {
+  font-size: 10px; font-weight: 500;
+  padding: 2px 8px; border-radius: 20px;
+}
+.t-hotel { background: rgba(212,163,54,0.15); color: #8B6914; }
+.t-resa { background: rgba(196,96,58,0.12); color: var(--terracotta); }
+.t-food { background: rgba(61,107,79,0.12); color: var(--oasis); }
+.t-culture { background: rgba(78,127,168,0.12); color: var(--sky); }
+.t-uv { background: rgba(196,96,58,0.18); color: var(--terracotta); }
+
+/* ── ALERTS ── */
+.alert {
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  display: flex; gap: 8px; align-items: flex-start;
+}
+.alert-icon { font-size: 14px; flex-shrink: 0; }
+.a-warn { background: rgba(196,96,58,0.1); color: #8B3A1E; border: 1px solid rgba(196,96,58,0.2); }
+.a-ok { background: rgba(61,107,79,0.1); color: #1E5232; border: 1px solid rgba(61,107,79,0.2); }
+.a-info { background: rgba(78,127,168,0.1); color: #1E3E60; border: 1px solid rgba(78,127,168,0.2); }
+
+/* ── BRONZE PAGE ── */
+.bronze-hero {
+  background: linear-gradient(135deg, var(--green-dark) 0%, #C4603A 100%);
+  border-radius: 16px;
+  padding: 20px;
+  color: var(--sand);
+  margin-bottom: 14px;
+}
+.bronze-hero h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  color: var(--gold);
+  margin-bottom: 14px;
+}
+.bronze-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+.bronze-item {
+  background: rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 11px;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.bi-label { font-size: 9px; font-weight: 500; letter-spacing: 0.1em; color: rgba(245,237,216,0.5); text-transform: uppercase; margin-bottom: 4px; }
+.bi-val { font-size: 14px; font-weight: 500; }
+.bronze-tip {
+  display: flex; gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  font-size: 12px;
+  color: rgba(245,237,216,0.8);
+  line-height: 1.5;
+}
+.bronze-tip:last-child { border-bottom: none; }
+.bt-icon { font-size: 16px; flex-shrink: 0; }
+
+/* ── TODO PAGE ── */
+.todo-section {
+  background: white;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(26,18,8,0.08);
+  margin-bottom: 12px;
+}
+.todo-head {
+  padding: 12px 14px;
+  font-size: 12px; font-weight: 500;
+  color: white;
+  letter-spacing: 0.04em;
+}
+.todo-head.urgent { background: var(--terracotta); }
+.todo-head.medium { background: #D4A336; color: #1A1208; }
+.todo-head.ok { background: var(--oasis); }
+
+.todo-item {
+  display: flex; gap: 12px;
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(26,18,8,0.05);
+  align-items: flex-start;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.todo-item:last-child { border-bottom: none; }
+.todo-item:active { background: rgba(26,18,8,0.03); }
+.todo-item.done .todo-text { opacity: 0.4; text-decoration: line-through; }
+
+.todo-checkbox {
+  width: 20px; height: 20px;
+  border-radius: 6px;
+  border: 2px solid rgba(26,18,8,0.2);
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  margin-top: 1px;
+}
+.todo-item.done .todo-checkbox {
+  background: var(--oasis);
+  border-color: var(--oasis);
+}
+.todo-checkbox-tick { color: white; font-size: 12px; display: none; }
+.todo-item.done .todo-checkbox-tick { display: block; }
+
+.todo-text { flex: 1; font-size: 13px; line-height: 1.4; }
+.todo-sub { font-size: 11px; color: var(--terracotta); margin-top: 3px; font-weight: 500; }
+
+.spacer { height: 8px; }
+</style>
+</head>
+<body>
+
+<!-- HERO (shown on home/alger page) -->
+<div class="hero" id="hero">
+  <img class="hero-logo" src="icons/apple-touch-icon.png" alt="Algérie">
+  <div class="hero-label">Programme · 29 mars – 7 avril 2026</div>
+  <h1>Algérie<br><em>10 jours</em></h1>
+  <div class="hero-sub">Alger · Cherchell · Bou Saâda</div>
+  <div class="hero-chips">
+    <span class="hero-chip">✈ CDG → ALG 29 mars 9h</span>
+    <span class="hero-chip">🌊 Cherchell 2–5 avr</span>
+    <span class="hero-chip">🏜 Bou Saâda 5–7 avr</span>
+    <span class="hero-chip">✈ ALG → CDG 7 avr 9h</span>
+  </div>
+</div>
+
+<!-- ═══ PAGE ALGER ═══ -->
+<div class="page active" id="page-alger">
+
+  <div class="uv-banner">
+    <span>☀️</span>
+    <div><strong>UV 6–7 élevé — SPF 30 minimum</strong>Pluie 65–75% les 3 premiers jours. Fenêtre bronzage : 11h–15h30.</div>
+  </div>
+
+  <div class="uv-card">
+    <div class="uv-card-head">
+      <span class="uv-card-label">UV & RESSENTI — ALGER</span>
+      <span class="uv-badge badge-high">UV 6–7 Élevé</span>
+    </div>
+    <div class="uv-row"><div class="uv-time-label">8h–9h</div><div class="uv-number" style="color:#4E7FA8">UV 2</div><div class="uv-bar-bg"><div class="uv-bar-fill" style="width:22%;background:#4E7FA8"></div></div><div class="uv-label">Ressenti ~9°C</div></div>
+    <div class="uv-row"><div class="uv-time-label">9h–10h</div><div class="uv-number" style="color:#4E7FA8">UV 4</div><div class="uv-bar-bg"><div class="uv-bar-fill" style="width:44%;background:#4E7FA8"></div></div><div class="uv-label">Ressenti ~11°C</div></div>
+    <div class="uv-row"><div class="uv-time-label">10h–11h</div><div class="uv-number" style="color:#D4A336">UV 5</div><div class="uv-bar-bg"><div class="uv-bar-fill" style="width:55%;background:#D4A336"></div></div><div class="uv-label">Ressenti ~12°C</div></div>
+    <div class="uv-row peak"><div class="uv-time-label">11h–15h</div><div class="uv-number" style="color:#C4603A">UV 6–7</div><div class="uv-bar-bg"><div class="uv-bar-fill" style="width:78%;background:#C4603A"></div></div><div class="uv-label hot">⚡ PIC</div></div>
+    <div class="uv-row peak"><div class="uv-time-label">15h–16h30</div><div class="uv-number" style="color:#C4603A">UV 5</div><div class="uv-bar-bg"><div class="uv-bar-fill" style="width:55%;background:#C4603A"></div></div><div class="uv-label hot">Bronzage</div></div>
+    <div class="uv-row"><div class="uv-time-label">16h30–19h</div><div class="uv-number" style="color:#4E7FA8">UV 2</div><div class="uv-bar-bg"><div class="uv-bar-fill" style="width:20%;background:#4E7FA8"></div></div><div class="uv-label">Ressenti ~11°C</div></div>
+    <div class="temps-row">
+      <span class="temp-chip">Max <b>13°C</b></span>
+      <span class="temp-chip">Ressenti <b>~11°C</b></span>
+      <span class="temp-chip">Nuit <b>~8°C</b></span>
+      <span class="temp-chip">Mercure Palais Congrès</span>
+    </div>
+  </div>
+
+  <!-- 29 mars -->
+  <div class="day-card">
+    <div class="day-card-head"><div class="day-dot d-alger"></div><div><div class="day-card-date">DIM 29 MARS</div><div class="day-card-name">Arrivée + Mercure</div></div><div class="day-card-wx"><strong>10°C</strong>Pluie 75%</div></div>
+    <div class="event"><div class="event-time">10h15</div><div class="event-line line-alger"></div><div class="event-body"><div class="event-title">Atterrissage ALG + voiture</div><div class="event-desc">Immigration + bagages ~45 min. Prise voiture de location.</div></div></div>
+    <div class="event"><div class="event-time">~12h</div><div class="event-line line-alger"></div><div class="event-body"><div class="event-title">Check-in Mercure → Azaoua ou Olivetto</div><div class="event-desc">Buffet algérien ou gastronomique italien. Premier repas.</div><div class="event-tags"><span class="etag t-hotel">Mercure</span></div></div></div>
+    <div class="event"><div class="event-time">APM</div><div class="event-line line-alger"></div><div class="event-body"><div class="event-title">Spa · hammam algérien · sauna</div><div class="event-desc">Décompresser. Demander Djamila au spa — très bien notée.</div><div class="event-tags"><span class="etag t-hotel">Mercure</span></div></div></div>
+    <div class="event"><div class="event-time">Fin APM</div><div class="event-line line-alger"></div><div class="event-body"><div class="event-title">Piscine + bar La Brise</div><div class="event-desc">Vue mer. Caxine Lounge 2e étage le soir.</div><div class="event-tags"><span class="etag t-hotel">Mercure</span></div></div></div>
+  </div>
+
+  <!-- 30 mars -->
+  <div class="day-card">
+    <div class="day-card-head"><div class="day-dot d-alger"></div><div><div class="day-card-date">LUN 30 MARS</div><div class="day-card-name">Casbah · Five · Bd 11 Déc</div></div><div class="day-card-wx"><strong>13°C</strong>Pluie 65%</div></div>
+    <div class="event"><div class="event-time">7h30</div><div class="event-line line-alger"></div><div class="event-body"><div class="event-title">Petit-déj buffet Azaoua</div><div class="event-tags"><span class="etag t-hotel">Mercure</span></div></div></div>
+    <div class="event"><div class="event-time">9h–12h</div><div class="event-line line-alger"></div><div class="event-body"><div class="event-title">Casbah d'Alger — UNESCO</div><div class="event-desc">Guide local obligatoire (500–1000 DA). Chaussures fermées.</div><div class="event-tags"><span class="etag t-culture">Culture</span></div></div></div>
+    <div class="event"><div class="event-time">Déj</div><div class="event-line line-alger"></div><div class="event-body"><div class="event-title">Bab El Oued — fricassé · merguez</div><div class="event-desc">Place des Martyrs &lt;500 DA/tête.</div><div class="event-tags"><span class="etag t-food">Street food</span></div></div></div>
+    <div class="event"><div class="event-time">15h–16h</div><div class="event-line line-alger"></div><div class="event-body"><div class="event-title">Fitness + douche Mercure</div><div class="event-tags"><span class="etag t-hotel">Mercure</span></div></div></div>
+    <div class="event"><div class="event-time">17h–18h</div><div class="event-line line-alger"></div><div class="event-body"><div class="event-title">Foot-Five — terrain à réserver</div><div class="event-desc">foot-five.com · 1h créneau.</div><div class="event-tags"><span class="etag t-resa">À réserver</span></div></div></div>
+    <div class="event"><div class="event-time">19h+</div><div class="event-line line-alger"></div><div class="event-body"><div class="event-title">Bd du 11 Décembre — atay + dîner</div><div class="event-desc">Votre boulevard. Atay en terrasse.</div></div></div>
+  </div>
+
+  <!-- 31 mars -->
+  <div class="day-card">
+    <div class="day-card-head"><div class="day-dot d-alger"></div><div><div class="day-card-date">MAR 31 MARS</div><div class="day-card-name">Musée · Mosquée · Lalla Meriem</div></div><div class="day-card-wx"><strong>13°C</strong>Pluie 75%</div></div>
+    <div class="event"><div class="event-time">Matin</div><div class="event-line line-alger"></div><div class="event-body"><div class="event-title">Grasse matinée + Le Pressé</div><div class="event-tags"><span class="etag t-hotel">Mercure</span></div></div></div>
+    <div class="event"><div class="event-time">10h–12h</div><div class="event-line line-alger"></div><div class="event-body"><div class="event-title">Musée National des Beaux-Arts</div><div class="event-desc">El Hamma · art algérien contemporain.</div><div class="event-tags"><span class="etag t-culture">Culture</span></div></div></div>
+    <div class="event"><div class="event-time">14h–16h</div><div class="event-line line-alger"></div><div class="event-body"><div class="event-title">Massage + soin visage — spa Mercure</div><div class="event-desc">Demander Djamila. Réserver au +213 2199 9000.</div><div class="event-tags"><span class="etag t-hotel">Mercure</span><span class="etag t-resa">À réserver</span></div></div></div>
+    <div class="event"><div class="event-time">16h30</div><div class="event-line line-alger"></div><div class="event-body"><div class="event-title">Djamaa El Djazaïr — minaret 265m</div><div class="event-desc">38e étage · vue 360°. Porte 14, av. Ahmed Azzouz. 2h. → djamaa-eldjazair.dz</div><div class="event-tags"><span class="etag t-resa">Réserver avant</span><span class="etag t-culture">Incontournable</span></div></div></div>
+    <div class="event"><div class="event-time">~20h30</div><div class="event-line line-alger"></div><div class="event-body"><div class="event-title">Dîner — Lalla Meriem (Hydra)</div><div class="event-desc">DM Facebook avant de partir.</div><div class="event-tags"><span class="etag t-resa">Réserver</span><span class="etag t-food">Gastronomie</span></div></div></div>
+  </div>
+
+  <!-- 1er avril -->
+  <div class="day-card">
+    <div class="day-card-head"><div class="day-dot d-alger"></div><div><div class="day-card-date">MER 1er AVRIL</div><div class="day-card-name">Tasty Crousty · Côte ouest</div></div><div class="day-card-wx"><strong>13°C</strong>Pluie 40%</div></div>
+    <div class="event"><div class="event-time">Matin</div><div class="event-line line-alger"></div><div class="event-body"><div class="event-title">Fitness + piscine</div><div class="event-tags"><span class="etag t-hotel">Mercure</span></div></div></div>
+    <div class="event"><div class="event-time">12h</div><div class="event-line line-alger"></div><div class="event-body"><div class="event-title">Tasty Crousty — Draria</div><div class="event-desc">Chemin des Crêtes · takeaway uniquement. Vérifier @tastycrousty Instagram.</div><div class="event-tags"><span class="etag t-food">Incontournable</span></div></div></div>
+    <div class="event"><div class="event-time">APM</div><div class="event-line line-alger"></div><div class="event-body"><div class="event-title">Côte ouest — Ain Benian</div><div class="event-desc">Cafés terrasse face à la mer.</div></div></div>
+    <div class="event"><div class="event-time">Soir</div><div class="event-line line-alger"></div><div class="event-body"><div class="event-title">Bd 11 Décembre — dernier dîner Alger</div><div class="event-desc">Préparer voiture : plein, GPS Cherchell, bagages.</div></div></div>
+  </div>
+</div>
+
+<!-- ═══ PAGE CHERCHELL ═══ -->
+<div class="page" id="page-cherchell">
+  <div class="section-hd">
+    <div class="section-tag">2 – 5 avril · 3 nuits</div>
+    <div class="section-title">Cherchell</div>
+    <div class="section-sub">Appartement · Côte méditerranéenne</div>
+  </div>
+
+  <div class="uv-card">
+    <div class="uv-card-head">
+      <span class="uv-card-label">UV & RESSENTI — CHERCHELL</span>
+      <span class="uv-badge badge-high">UV 6–7 Élevé</span>
+    </div>
+    <div class="uv-row"><div class="uv-time-label">8h–10h</div><div class="uv-number" style="color:#3D6B4F">UV 2–3</div><div class="uv-bar-bg"><div class="uv-bar-fill" style="width:28%;background:#3D6B4F"></div></div><div class="uv-label">Ressenti ~13°C</div></div>
+    <div class="uv-row"><div class="uv-time-label">10h–11h</div><div class="uv-number" style="color:#D4A336">UV 5</div><div class="uv-bar-bg"><div class="uv-bar-fill" style="width:55%;background:#D4A336"></div></div><div class="uv-label">Ressenti ~17°C</div></div>
+    <div class="uv-row peak"><div class="uv-time-label">11h–15h</div><div class="uv-number" style="color:#C4603A">UV 6–7</div><div class="uv-bar-bg"><div class="uv-bar-fill" style="width:80%;background:#C4603A"></div></div><div class="uv-label hot">⚡ PIC</div></div>
+    <div class="uv-row peak"><div class="uv-time-label">15h–16h30</div><div class="uv-number" style="color:#D4A336">UV 4–5</div><div class="uv-bar-bg"><div class="uv-bar-fill" style="width:52%;background:#D4A336"></div></div><div class="uv-label hot">Bronzage</div></div>
+    <div class="uv-row"><div class="uv-time-label">16h30–19h</div><div class="uv-number" style="color:#3D6B4F">UV 2</div><div class="uv-bar-bg"><div class="uv-bar-fill" style="width:20%;background:#3D6B4F"></div></div><div class="uv-label">Ressenti ~16°C</div></div>
+    <div class="temps-row">
+      <span class="temp-chip">2 avr <b>17°C / vent léger</b></span>
+      <span class="temp-chip">3 avr <b>17–18°C / sec</b></span>
+      <span class="temp-chip">4 avr <b>22–24°C ☀️</b></span>
+      <span class="temp-chip">5 avr <b>24°C / sec</b></span>
+      <span class="temp-chip">Mer <b>~16°C</b></span>
+    </div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-card-head"><div class="day-dot d-cherchell"></div><div><div class="day-card-date">JEU 2 AVRIL</div><div class="day-card-name">Arrivée + découverte</div></div><div class="day-card-wx"><strong>17°C</strong>Sec</div></div>
+    <div class="event"><div class="event-time">~11h30</div><div class="event-line line-cherchell"></div><div class="event-body"><div class="event-title">Arrivée depuis Alger (90km N11)</div></div></div>
+    <div class="event"><div class="event-time">Déj</div><div class="event-line line-cherchell"></div><div class="event-body"><div class="event-title">Port — fruits de mer</div><div class="event-desc">Quartier Mina · poisson grillé, crevettes dersa.</div><div class="event-tags"><span class="etag t-food">Spécialité locale</span></div></div></div>
+    <div class="event"><div class="event-time">APM</div><div class="event-line line-cherchell"></div><div class="event-body"><div class="event-title">Place des Martyrs + vieille ville</div><div class="event-desc">Mosquée El Rahman "aux cent colonnes" · ruines romaines à l'air libre.</div><div class="event-tags"><span class="etag t-culture">Patrimoine</span></div></div></div>
+    <div class="event"><div class="event-time">~18h30</div><div class="event-line line-cherchell"></div><div class="event-body"><div class="event-title">Plage Mer et Soleil — coucher de soleil</div></div></div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-card-head"><div class="day-dot d-cherchell"></div><div><div class="day-card-date">VEN 3 AVRIL</div><div class="day-card-name">Musée · Tipaza UNESCO · Mausolée</div></div><div class="day-card-wx"><strong>17–18°C</strong>Sec ☀️</div></div>
+    <div class="event"><div class="event-time">9h–11h</div><div class="event-line line-cherchell"></div><div class="event-body"><div class="event-title">Musée National de Cherchell</div><div class="event-desc">Sculptures Juba II · 40 mosaïques romaines. Un des meilleurs musées d'Algérie.</div><div class="event-tags"><span class="etag t-culture">Incontournable</span></div></div></div>
+    <div class="event"><div class="event-time">11h30</div><div class="event-line line-cherchell"></div><div class="event-body"><div class="event-title">Mausolée royal de Maurétanie</div><div class="event-desc">Tombeau Juba II + Cléopâtre Séléné II · vue panoramique mer.</div><div class="event-tags"><span class="etag t-culture">Histoire</span></div></div></div>
+    <div class="event"><div class="event-time">Déj</div><div class="event-line line-cherchell"></div><div class="event-body"><div class="event-title">Tipaza — poisson grillé face à la mer</div><div class="event-desc">Restaurant Romana ou Le Dauphin.</div><div class="event-tags"><span class="etag t-food">Fruits de mer</span></div></div></div>
+    <div class="event"><div class="event-time">14h30–17h</div><div class="event-line line-cherchell"></div><div class="event-body"><div class="event-title">Ruines romaines de Tipaza — UNESCO</div><div class="event-desc">Forum · Basilique · Amphithéâtre · bord de mer · Camus.</div><div class="event-tags"><span class="etag t-culture">UNESCO</span></div></div></div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-card-head"><div class="day-dot d-cherchell"></div><div><div class="day-card-date">SAM 4 AVRIL</div><div class="day-card-name">Farniente · Plages · Bronzage max</div></div><div class="day-card-wx"><strong>22–24°C ☀️</strong>Meilleure journée</div></div>
+    <div class="event"><div class="event-time">Matin</div><div class="event-line line-cherchell"></div><div class="event-body"><div class="event-title">Grasse matinée</div><div class="event-desc">22°C le matin — déjà l'été.</div></div></div>
+    <div class="event"><div class="event-time">10h30–15h</div><div class="event-line line-cherchell"></div><div class="event-body"><div class="event-title">Plage El Hamdania → Oued El Bellaa</div><div class="event-desc">Quasi-désertées en avril. Mer ~16°C baignable. SPF 30 minimum, retourner toutes les 30 min.</div><div class="event-tags"><span class="etag t-uv">UV PIC 11h–15h</span></div></div></div>
+    <div class="event"><div class="event-time">Coucher ☀️</div><div class="event-line line-cherchell"></div><div class="event-body"><div class="event-title">Plage Mer et Soleil — dernier coucher</div><div class="event-desc">Préparer bagages après.</div></div></div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-card-head"><div class="day-dot d-cherchell"></div><div><div class="day-card-date">DIM 5 AVRIL — départ 12h</div><div class="day-card-name">Dernier matin → Bou Saada</div></div><div class="day-card-wx"><strong>24°C</strong>Sec</div></div>
+    <div class="event"><div class="event-time">Matin</div><div class="event-line line-cherchell"></div><div class="event-body"><div class="event-title">Grasse matinée</div><div class="event-desc">Bagages prêts de la veille.</div></div></div>
+    <div class="event"><div class="event-time">12h00</div><div class="event-line line-bousaada"></div><div class="event-body"><div class="event-title">Départ → Bou Saada (~3h30)</div><div class="event-desc">Via Médéa / Ain Oussera / Birine. Plein d'essence avant. Stop Médéa possible.</div></div></div>
+    <div class="event"><div class="event-time">~15h30</div><div class="event-line line-bousaada"></div><div class="event-body"><div class="event-title">Arrivée — check-in Rose des Sables</div><div class="event-desc">Centre-ville · Cité Émir Abdelkader · jacuzzi · terrasses · cour fontaine.</div><div class="event-tags"><span class="etag t-hotel">Rose des Sables</span></div></div></div>
+  </div>
+
+  <div class="alert a-ok"><div class="alert-icon">✅</div><div>Quasi aucune pluie du 2 au 5 avril. 24°C le samedi 4 = meilleure fenêtre bronzage du voyage entier.</div></div>
+</div>
+
+<!-- ═══ PAGE BOU SAADA ═══ -->
+<div class="page" id="page-bousaada">
+  <div class="section-hd">
+    <div class="section-tag">5 – 7 avril · 2 nuits</div>
+    <div class="section-title">Bou Saâda</div>
+    <div class="section-sub">La Rose des Sables · Porte du désert</div>
+  </div>
+
+  <div class="uv-card">
+    <div class="uv-card-head">
+      <span class="uv-card-label">UV & RESSENTI — BOU SAÂDA (580m)</span>
+      <span class="uv-badge badge-vhigh">UV 7–8 Fort 🔥</span>
+    </div>
+    <div class="uv-row"><div class="uv-time-label">8h–10h</div><div class="uv-number" style="color:#C4603A">UV 3–4</div><div class="uv-bar-bg"><div class="uv-bar-fill" style="width:35%;background:#C4603A"></div></div><div class="uv-label">Ressenti ~8°C</div></div>
+    <div class="uv-row"><div class="uv-time-label">10h–11h30</div><div class="uv-number" style="color:#C4603A">UV 5–6</div><div class="uv-bar-bg"><div class="uv-bar-fill" style="width:62%;background:#C4603A"></div></div><div class="uv-label">Ressenti ~16°C</div></div>
+    <div class="uv-row peak"><div class="uv-time-label">11h30–15h</div><div class="uv-number" style="color:#C4603A;font-size:14px">UV 7–8</div><div class="uv-bar-bg"><div class="uv-bar-fill" style="width:90%;background:#C4603A"></div></div><div class="uv-label hot">🔥 MAX VOYAGE</div></div>
+    <div class="uv-row peak"><div class="uv-time-label">15h–16h30</div><div class="uv-number" style="color:#C4603A">UV 5–6</div><div class="uv-bar-bg"><div class="uv-bar-fill" style="width:60%;background:#C4603A"></div></div><div class="uv-label hot">Bronzage actif</div></div>
+    <div class="uv-row"><div class="uv-time-label">16h30–19h</div><div class="uv-number" style="color:#D4A336">UV 2–3</div><div class="uv-bar-bg"><div class="uv-bar-fill" style="width:26%;background:#D4A336"></div></div><div class="uv-label">Ressenti ~18°C</div></div>
+    <div class="temps-row">
+      <span class="temp-chip">5 avr <b>22°C</b></span>
+      <span class="temp-chip">6 avr <b>24°C ☀️</b></span>
+      <span class="temp-chip">7 avr <b>22°C</b></span>
+      <span class="temp-chip">Nuit <b>~8°C ❄️</b></span>
+      <span class="temp-chip">Altitude <b>580m = UV+15%</b></span>
+    </div>
+  </div>
+
+  <div class="alert a-warn"><div class="alert-icon">🔥</div><div>UV 7–8 = max du voyage. SPF 50 obligatoire 11h30–15h. Chapeau sur les dunes. Humidité 43% — vous déshydratez sans le sentir.</div></div>
+
+  <div class="day-card">
+    <div class="day-card-head"><div class="day-dot d-bousaada"></div><div><div class="day-card-date">DIM 5 AVRIL — soir</div><div class="day-card-name">Arrivée + première soirée</div></div><div class="day-card-wx"><strong>22°C</strong>Sec</div></div>
+    <div class="event"><div class="event-time">~15h30</div><div class="event-line line-bousaada"></div><div class="event-body"><div class="event-title">Check-in La Rose des Sables</div><div class="event-desc">Cour intérieure fontaine · mosaïques · terrasses panoramiques · jacuzzi.</div><div class="event-tags"><span class="etag t-hotel">Rose des Sables</span></div></div></div>
+    <div class="event"><div class="event-time">16h–18h</div><div class="event-line line-bousaada"></div><div class="event-body"><div class="event-title">Oued Bou Saada — palmeraies</div><div class="event-desc">Les berges où Étienne Dinet tenait son atelier.</div></div></div>
+    <div class="event"><div class="event-time">~19h</div><div class="event-line line-bousaada"></div><div class="event-body"><div class="event-title">Dunes — coucher de soleil</div><div class="event-desc">Lumière dorée sur le ksar. La lumière qui a rendu Dinet amoureux du lieu.</div></div></div>
+    <div class="event"><div class="event-time">Soir</div><div class="event-line line-bousaada"></div><div class="event-body"><div class="event-title">Dîner à la Rose des Sables</div><div class="event-desc">Chakhchoukha · zfiti · thé djor aux herbes du désert.</div><div class="event-tags"><span class="etag t-hotel">Rose des Sables</span><span class="etag t-food">Cuisine locale</span></div></div></div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-card-head"><div class="day-dot d-bousaada"></div><div><div class="day-card-date">LUN 6 AVRIL</div><div class="day-card-name">Ksar · Dinet · Jacuzzi · El Hamel</div></div><div class="day-card-wx"><strong>24°C ☀️</strong>Meilleure journée</div></div>
+    <div class="event"><div class="event-time">Matin</div><div class="event-line line-bousaada"></div><div class="event-body"><div class="event-title">Petit-déj maison — galettes + confitures</div><div class="event-desc">Cour intérieure sous plafond de verre.</div><div class="event-tags"><span class="etag t-hotel">Rose des Sables</span></div></div></div>
+    <div class="event"><div class="event-time">9h–11h</div><div class="event-line line-bousaada"></div><div class="event-body"><div class="event-title">Musée Nasreddine Dinet</div><div class="event-desc">24 rue Nassredine Dinet · 200 DA · 9h–16h. Testament en arabe à la main — très touchant.</div><div class="event-tags"><span class="etag t-culture">Incontournable</span></div></div></div>
+    <div class="event"><div class="event-time">11h–13h</div><div class="event-line line-bousaada"></div><div class="event-body"><div class="event-title">Vieux Ksar</div><div class="event-desc">Encore habité · mosquées centenaires · tombe fils Émir Abdelkader · école Boudiaf.</div><div class="event-tags"><span class="etag t-culture">Patrimoine</span></div></div></div>
+    <div class="event"><div class="event-time">14h30–16h</div><div class="event-line line-bousaada"></div><div class="event-body"><div class="event-title">Jacuzzi + terrasse panoramique</div><div class="event-desc">24°C · UV 5–6 à 15h = bronzage en terrasse. Le meilleur moment de la journée.</div><div class="event-tags"><span class="etag t-hotel">Rose des Sables</span><span class="etag t-uv">UV bronzage</span></div></div></div>
+    <div class="event"><div class="event-time">16h–17h30</div><div class="event-line line-bousaada"></div><div class="event-body"><div class="event-title">Zaouïa d'El Hamel</div><div class="event-desc">15 min voiture · XIXe siècle · jardins · manuscrits.</div><div class="event-tags"><span class="etag t-culture">Spirituel</span></div></div></div>
+    <div class="event"><div class="event-time">18h–19h30</div><div class="event-line line-bousaada"></div><div class="event-body"><div class="event-title">Moulin Ferrero + palmeraies</div><div class="event-desc">Cascade sur l'oued · scènes immortalisées par Dinet.</div></div></div>
+    <div class="event"><div class="event-time">Nuit</div><div class="event-line line-bousaada"></div><div class="event-body"><div class="event-title">Dîner + étoiles depuis la terrasse</div><div class="event-desc">8°C + zéro pollution lumineuse = ciel exceptionnel.</div><div class="event-tags"><span class="etag t-hotel">Rose des Sables</span></div></div></div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-card-head"><div class="day-dot d-retour"></div><div><div class="day-card-date">MAR 7 AVRIL — départ 18h</div><div class="day-card-name">Dernier matin → Rouïba → Paris</div></div><div class="day-card-wx"><strong>22°C</strong>Nuageux</div></div>
+    <div class="event"><div class="event-time">Matin</div><div class="event-line line-retour"></div><div class="event-body"><div class="event-title">Lever soleil sur les dunes (opt. 6h30)</div><div class="event-desc">Ou dernier petit-déj galettes Rose des Sables.</div></div></div>
+    <div class="event"><div class="event-time">10h–12h</div><div class="event-line line-retour"></div><div class="event-body"><div class="event-title">Montagnes Ouled Naïl — vue panoramique</div><div class="event-desc">Les collines violettes de Bou Saada.</div></div></div>
+    <div class="event"><div class="event-time">Déj</div><div class="event-line line-retour"></div><div class="event-body"><div class="event-title">Dernier zfiti + achats dattes</div><div class="event-desc">Dattes Deglet Nour · herbes désert · artisanat Ouled Naïl.</div><div class="event-tags"><span class="etag t-food">À ramener</span></div></div></div>
+    <div class="event"><div class="event-time">15h</div><div class="event-line line-retour"></div><div class="event-body"><div class="event-title">Check-out + plein d'essence</div><div class="event-desc">Faire le plein à Bou Saada avant — stations rares sur RN1.</div></div></div>
+    <div class="event"><div class="event-time">18h00</div><div class="event-line line-retour"></div><div class="event-body"><div class="event-title">Départ → Rouïba (~270km · 3h)</div><div class="event-desc">RN1 direction nord · Bouira · Lakhdaria · Rouïba. Nuit — vigilance animaux sur la route.</div></div></div>
+    <div class="event"><div class="event-time">~22h</div><div class="event-line line-retour"></div><div class="event-body"><div class="event-title">Arrivée chez l'oncle à Rouïba</div><div class="event-desc">Coucher tôt. Réveil 5h · départ 5h30.</div></div></div>
+    <div class="event"><div class="event-time">5h30</div><div class="event-line line-retour"></div><div class="event-body"><div class="event-title">Départ → ALG · Rendu voiture</div><div class="event-desc">Rendre la voiture AVANT le comptoir Air Algérie (20 min restitution).</div></div></div>
+    <div class="event"><div class="event-time">9h00</div><div class="event-line line-retour"></div><div class="event-body"><div class="event-title">✈ Vol AH1231 ALG → CDG</div><div class="event-desc">Arrivée Paris CDG T2D à 11h15. Bronzés 🇩🇿</div></div></div>
+  </div>
+</div>
+
+<!-- ═══ PAGE BRONZAGE ═══ -->
+<div class="page" id="page-bronze">
+  <div class="section-hd">
+    <div class="section-tag">Guide pratique</div>
+    <div class="section-title">Revenir bronzés</div>
+  </div>
+
+  <div class="bronze-hero">
+    <h2>Stratégie bronzage</h2>
+    <div class="bronze-grid">
+      <div class="bronze-item"><div class="bi-label">Alger 29 mars–1 avr</div><div class="bi-val">UV 6–7 · SPF 30</div></div>
+      <div class="bronze-item"><div class="bi-label">Cherchell 2–5 avr</div><div class="bi-val">UV 6–7 · SPF 30–50</div></div>
+      <div class="bronze-item"><div class="bi-label">Bou Saada 5–7 avr</div><div class="bi-val">UV 7–8 · SPF 50 🔥</div></div>
+      <div class="bronze-item"><div class="bi-label">Fenêtre optimale</div><div class="bi-val">11h–15h30 partout</div></div>
+    </div>
+    <div class="bronze-tips">
+      <div class="bronze-tip"><span class="bt-icon">🏖</span>Meilleure journée bronzage : 4 avril Cherchell (24°C + UV 7 + plage déserte). Priorité absolue.</div>
+      <div class="bronze-tip"><span class="bt-icon">🕐</span>Remettre la crème toutes les 2h et après baignade. Le vent côtier à Cherchell est trompeur.</div>
+      <div class="bronze-tip"><span class="bt-icon">🏜</span>Bou Saada : UV max à 580m d'altitude. Chapeau sur les dunes, lunettes obligatoires.</div>
+      <div class="bronze-tip"><span class="bt-icon">💧</span>2L d'eau/jour minimum à Bou Saada — air sec 43% humidité, vous déshydratez sans le sentir.</div>
+      <div class="bronze-tip"><span class="bt-icon">🌅</span>Évitez bronzage après 16h30 à Bou Saada — chaleur accumulée risque coup de chaleur.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PAGE TODO ═══ -->
+<div class="page" id="page-todo">
+  <div class="section-hd">
+    <div class="section-tag">Check-list interactive</div>
+    <div class="section-title">À faire avant</div>
+  </div>
+
+  <div class="todo-section">
+    <div class="todo-head urgent">🔴 Urgent — faire maintenant</div>
+    <div class="todo-item" onclick="toggleTodo(this)">
+      <div class="todo-checkbox"><span class="todo-checkbox-tick">✓</span></div>
+      <div class="todo-text">Réserver montée minaret Djamaa El Djazaïr (31 mars, 16h30)<div class="todo-sub">→ djamaa-eldjazair.dz · passeport, email, date</div></div>
+    </div>
+    <div class="todo-item" onclick="toggleTodo(this)">
+      <div class="todo-checkbox"><span class="todo-checkbox-tick">✓</span></div>
+      <div class="todo-text">Réserver Lalla Meriem Hydra (31 mars, 20h30, 2 pers)<div class="todo-sub">→ DM Facebook @restaurantlallameriem</div></div>
+    </div>
+    <div class="todo-item" onclick="toggleTodo(this)">
+      <div class="todo-checkbox"><span class="todo-checkbox-tick">✓</span></div>
+      <div class="todo-text">Réserver Foot-Five (30 mars, 17h, 1h)<div class="todo-sub">→ foot-five.com</div></div>
+    </div>
+    <div class="todo-item" onclick="toggleTodo(this)">
+      <div class="todo-checkbox"><span class="todo-checkbox-tick">✓</span></div>
+      <div class="todo-text">Réserver massage spa Mercure (31 mars, 14h — demander Djamila)<div class="todo-sub">→ +213 2199 9000</div></div>
+    </div>
+    <div class="todo-item" onclick="toggleTodo(this)">
+      <div class="todo-checkbox"><span class="todo-checkbox-tick">✓</span></div>
+      <div class="todo-text">Dépôt marque REPER à l'INPI (classes 42+44, ~190€)<div class="todo-sub">→ À faire avant le départ</div></div>
+    </div>
+  </div>
+
+  <div class="todo-section">
+    <div class="todo-head medium">🟡 À vérifier</div>
+    <div class="todo-item" onclick="toggleTodo(this)">
+      <div class="todo-checkbox"><span class="todo-checkbox-tick">✓</span></div>
+      <div class="todo-text">Adresse Tasty Crousty Alger la plus proche<div class="todo-sub">→ Instagram @tastycrousty</div></div>
+    </div>
+    <div class="todo-item" onclick="toggleTodo(this)">
+      <div class="todo-checkbox"><span class="todo-checkbox-tick">✓</span></div>
+      <div class="todo-text">Confirmer réservation Rose des Sables Bou Saada<div class="todo-sub">→ +213 542 00 63 61 · larose7700@gmail.com</div></div>
+    </div>
+    <div class="todo-item" onclick="toggleTodo(this)">
+      <div class="todo-checkbox"><span class="todo-checkbox-tick">✓</span></div>
+      <div class="todo-text">Réservation voiture de location à l'aéroport ALG</div>
+    </div>
+    <div class="todo-item" onclick="toggleTodo(this)">
+      <div class="todo-checkbox"><span class="todo-checkbox-tick">✓</span></div>
+      <div class="todo-text">Vol AH1231 CDG 9h00 → ALG 10h15 · Enregistrement ✓<div class="todo-sub">Siège 15F · Embarquement 8h00 · Terminal 2D</div></div>
+    </div>
+  </div>
+
+  <div class="todo-section">
+    <div class="todo-head ok">🟢 À emporter</div>
+    <div class="todo-item" onclick="toggleTodo(this)">
+      <div class="todo-checkbox"><span class="todo-checkbox-tick">✓</span></div>
+      <div class="todo-text">SPF 50 (Bou Saada) + SPF 30 (Alger/Cherchell)</div>
+    </div>
+    <div class="todo-item" onclick="toggleTodo(this)">
+      <div class="todo-checkbox"><span class="todo-checkbox-tick">✓</span></div>
+      <div class="todo-text">Chapeau + lunettes de soleil (dunes Bou Saada)</div>
+    </div>
+    <div class="todo-item" onclick="toggleTodo(this)">
+      <div class="todo-checkbox"><span class="todo-checkbox-tick">✓</span></div>
+      <div class="todo-text">Veste légère (nuits 8°C à Bou Saada)</div>
+    </div>
+    <div class="todo-item" onclick="toggleTodo(this)">
+      <div class="todo-checkbox"><span class="todo-checkbox-tick">✓</span></div>
+      <div class="todo-text">Chaussures fermées (Casbah + Ksar Bou Saada)</div>
+    </div>
+    <div class="todo-item" onclick="toggleTodo(this)">
+      <div class="todo-checkbox"><span class="todo-checkbox-tick">✓</span></div>
+      <div class="todo-text">Cash dinars (marchés, guides, petits restos)</div>
+    </div>
+  </div>
+  <div class="spacer"></div>
+</div>
+
+<!-- ── TAB BAR ── -->
+<nav class="tabs">
+  <button class="tab active" onclick="showPage('alger', this)">
+    <span class="tab-icon">🏙</span>
+    <span>Alger</span>
+    <div class="tab-dot"></div>
+  </button>
+  <button class="tab" onclick="showPage('cherchell', this)">
+    <span class="tab-icon">🌊</span>
+    <span>Cherchell</span>
+    <div class="tab-dot"></div>
+  </button>
+  <button class="tab" onclick="showPage('bousaada', this)">
+    <span class="tab-icon">🏜</span>
+    <span>Bou Saâda</span>
+    <div class="tab-dot"></div>
+  </button>
+  <button class="tab" onclick="showPage('bronze', this)">
+    <span class="tab-icon">☀️</span>
+    <span>Bronzage</span>
+    <div class="tab-dot"></div>
+  </button>
+  <button class="tab" onclick="showPage('todo', this)">
+    <span class="tab-icon">✅</span>
+    <span>Check-list</span>
+    <div class="tab-dot"></div>
+  </button>
+</nav>
+
+<script>
+// Register service worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(() => {});
+}
+
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  btn.classList.add('active');
+  // Show/hide hero
+  document.getElementById('hero').style.display = id === 'alger' ? 'block' : 'none';
+  window.scrollTo(0, 0);
+}
+
+function toggleTodo(el) {
+  el.classList.toggle('done');
+  // Persist in localStorage
+  const items = document.querySelectorAll('.todo-item');
+  const state = Array.from(items).map(i => i.classList.contains('done'));
+  localStorage.setItem('todo-state', JSON.stringify(state));
+}
+
+// Restore todo state
+window.addEventListener('load', () => {
+  const saved = localStorage.getItem('todo-state');
+  if (saved) {
+    const state = JSON.parse(saved);
+    document.querySelectorAll('.todo-item').forEach((item, i) => {
+      if (state[i]) item.classList.add('done');
+    });
+  }
+});
+</script>
+</body>
+</html>
